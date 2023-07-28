@@ -1,0 +1,25 @@
+{
+  "name": "product_catalog_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Full-stack-Heroes/product_catalog_backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Full-stack-Heroes/product_catalog_backend/issues"
+  },
+  "homepage": "https://github.com/Full-stack-Heroes/product_catalog_backend#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
+    "eslint": "^8.45.0"
+  }
+}
