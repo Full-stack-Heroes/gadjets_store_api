@@ -11,5 +11,6 @@ export interface Phone {
   color: string;
   ram: string;
   year: number;
-  image: string;
+  image: string;  
+  
 }
