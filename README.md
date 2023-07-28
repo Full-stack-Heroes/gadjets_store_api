@@ -7,6 +7,7 @@
 Api url from host: https://gadjets-store-apu.onrender.com/
 
 please set in .env file next variables:
+
 ```
 PORT=3000 // port
 CLIENT_URL='http://localhost:3001' // your frontend url
@@ -14,4 +15,5 @@ SERVER_HOST='http://localhost' // default is localhost
 
 DB_URI= // link for your local db
 ```
+
 todo: Create environment variables for development and production

@@ -1,6 +1,7 @@
-import { Column, Table } from "sequelize-typescript";
-import { dbInit } from "../db/dbInit";
-import { Model } from "sequelize";
+import {Column, Table} from 'sequelize-typescript';
+import {dbInit} from '../db/dbInit';
+import {DataTypes, Model} from 'sequelize';
+import {type} from 'os';
 
 const sequelize = dbInit();
 
@@ -9,8 +10,9 @@ const sequelize = dbInit();
   createdAt: false,
   updatedAt: false,
 })
-
 class Product extends Model {
-  @Column
-  name: string
-};
+  @Column({
+    type: DataTypes.STRING,
+  })
+  name: string;
+}
