@@ -5,9 +5,12 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "lint": "eslint .",
+    "format": "prettier --write . --ignore-path .gitignore",
+    "lint": "eslint . --ignore-path .gitignore",
     "prepare": "husky install",
-    "test": "lint"
+    "test": "npm run format && npm run lint",
+    "build": "tsc",
+    "start": "node ./build/index.js"
   },
   "keywords": [],
   "author": "",
