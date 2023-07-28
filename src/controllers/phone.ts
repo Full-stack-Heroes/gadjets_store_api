@@ -1,6 +1,6 @@
-import {Request, Response} from 'express';
-import {getProductsOnPage} from '../temp_models/phone';
-import {Phone} from '../types/phone';
+import { Request, Response } from 'express';
+import { getProductsOnPage } from '../temp_models/phone';
+import { Phone } from '../types/phone';
 
 export function getProducts(req: Request, res: Response) {
   const pageNumber: number = parseInt(req.query.page as string) || 1;
