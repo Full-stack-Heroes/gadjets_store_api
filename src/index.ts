@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import {getProducts} from './controllers/phone';
+import { getProducts } from './controllers/phone';
 import dotenv from 'dotenv';
 
 dotenv.config();
