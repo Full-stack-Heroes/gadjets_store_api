@@ -9,8 +9,8 @@
     "build": "tsc",
     "start": "node ./build/index.js",
     "format": "prettier --write src/. --ignore-path .gitignore",
-    "lint": "eslint src/. --ignore-path .gitignore --fix",
-    "fix-style": "npm run format && npm run lint"
+    "lint": "eslint src/. --ignore-path .gitignore",
+    "fix-style": "npm run format && npm run lint -- --fix"
   },
   "keywords": [],
   "author": "",
@@ -42,6 +42,6 @@
     "typescript": "^4.9.5"
   },
   "lint-staged": {
-    "*.ts": "npm run fix-style"
+    "*.ts": "npm run lint"
   }
 }
