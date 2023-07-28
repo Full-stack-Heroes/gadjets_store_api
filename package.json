@@ -5,7 +5,9 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepare": "husky install",
+    "test": "lint"
   },
   "keywords": [],
   "author": "",
