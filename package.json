@@ -40,5 +40,8 @@
     "psql": "0.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.5"
+  },
+  "lint-staged": {
+    "*.ts": "npm run fix-style"
   }
 }
