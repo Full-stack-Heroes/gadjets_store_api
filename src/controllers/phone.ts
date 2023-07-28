@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import {getProductsOnPage} from '../models/phone';
+import {getProductsOnPage} from '../temp_models/phone';
 import {Phone} from '../types/phone';
 
 export function getProducts(req: Request, res: Response) {
@@ -7,5 +7,5 @@ export function getProducts(req: Request, res: Response) {
   const pageSize: number = parseInt(req.query.size as string) || 10;
 
   const productsOnPage: Phone[] = getProductsOnPage(pageNumber, pageSize);
-  res.json(productsOnPage);
+  res.send(productsOnPage);
 }
