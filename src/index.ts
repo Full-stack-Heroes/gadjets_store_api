@@ -3,9 +3,11 @@ import cors from 'cors';
 import { getProducts } from './controllers/phone';
 import dotenv from 'dotenv';
 import path from 'path';
+import { dbInit } from './db/dbInit';
 
 dotenv.config();
 const app = express();
+dbInit();
 
 app.use(
   cors({
@@ -15,7 +17,8 @@ app.use(
 );
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 app.get('/products', getProducts);
 
