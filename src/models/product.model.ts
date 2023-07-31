@@ -17,18 +17,6 @@ export class Product extends Model {
   @Column({
     type: DataTypes.STRING,
   })
-    phoneId: string;
-
-  @AllowNull(false)
-  @Column({
-    type: DataTypes.STRING,
-  })
-    itemId: string;
-
-  @AllowNull(false)
-  @Column({
-    type: DataTypes.STRING,
-  })
     name: string;
 
   @AllowNull(false)
