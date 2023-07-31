@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import { getProducts } from './controllers/phone';
 import dotenv from 'dotenv';
-import path from 'path';
 import { dbInit } from './db/dbInit';
 
 dotenv.config();

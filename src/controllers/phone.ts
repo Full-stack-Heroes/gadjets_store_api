@@ -8,7 +8,7 @@ export async function getProducts(req: Request, res: Response) {
   try {
     const productsOnPage = await Product.findAll();
 
-    res.send({ message: 'Sucsess', productsOnPage });
+    res.send(productsOnPage);
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).send('Internal Server Error');
