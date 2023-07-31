@@ -1,11 +1,19 @@
 import { Request, Response } from 'express';
-import { getProductsOnPage } from '../temp_models/phone';
-import { Phone } from '../types/phone';
+import { Product } from '../models/product.model';
+import { dbInit } from '../db/dbInit';
 
-export function getProducts(req: Request, res: Response) {
+dbInit();
+
+export async function getProducts(req: Request, res: Response) {
   const pageNumber: number = parseInt(req.query.page as string) || 1;
   const pageSize: number = parseInt(req.query.size as string) || 10;
 
-  const productsOnPage: Phone[] = getProductsOnPage(pageNumber, pageSize);
-  res.send(productsOnPage);
+  try {
+    const productsOnPage = await Product.findAll();
+
+    res.send(productsOnPage);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).send('Internal Server Error');
+  }
 }

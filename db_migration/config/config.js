@@ -13,18 +13,9 @@ const credentials = {
 };
 
 const development = {
-  username: 'casaos',
-  password: 'casaos',
-  database: 'casaos',
-  host: '192.168.0.110',
-  port: 5432,
-  dialect: 'postgres',
-  seederStorage: 'sequelize',
-  
-};
-const test = {
   ...credentials,
 };
+
 const production = {
   ...credentials,
   dialectOptions: {
@@ -34,6 +25,5 @@ const production = {
 
 module.exports = {
   development,
-  test,
   production,
 };
