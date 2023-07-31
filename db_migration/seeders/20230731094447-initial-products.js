@@ -17,8 +17,6 @@ module.exports = {
   },
 
   async down (queryInterface) {
-    await queryInterface.bulkDelete(TABLE_NAME, {
-      id: data.map(({ id }) => id)
-    });
+    await queryInterface.bulkDelete(TABLE_NAME, null, {});
   }
 };
