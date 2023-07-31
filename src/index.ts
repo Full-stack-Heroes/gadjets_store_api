@@ -17,10 +17,8 @@ app.use(
 );
 app.use(express.json());
 
-const test_path = path.join(__dirname, 'public');
-
-app.use(express.static(test_path));
-console.log(test_path);
+app.use(express.static('public'));
+app.use('/images', express.static(__dirname + '/images'));
 
 app.get('/products', getProducts);
 
