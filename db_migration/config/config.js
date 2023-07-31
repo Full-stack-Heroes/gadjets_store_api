@@ -9,6 +9,7 @@ const credentials = {
   host: process.env.DB_HOST,
   port: 5432,
   dialect: 'postgres',
+  seederStorage: 'sequelize',
 };
 
 const development = {
@@ -18,6 +19,7 @@ const development = {
   host: '192.168.0.110',
   port: 5432,
   dialect: 'postgres',
+  seederStorage: 'sequelize',
   
 };
 const test = {
