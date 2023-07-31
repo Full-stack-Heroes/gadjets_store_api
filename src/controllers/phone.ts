@@ -1,8 +1,5 @@
 import { Request, Response } from 'express';
 import { Product } from '../models/product.model';
-import { dbInit } from '../db/dbInit';
-
-dbInit();
 
 export async function getProducts(req: Request, res: Response) {
   const pageNumber: number = parseInt(req.query.page as string) || 1;
