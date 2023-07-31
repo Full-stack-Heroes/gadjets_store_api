@@ -18,7 +18,7 @@ app.use(
 app.use(express.json());
 
 app.use(express.static('public'));
-app.use('/images', express.static(__dirname + '/images'));
+app.use(express.static(__dirname + '/public'));
 
 app.get('/products', getProducts);
 

@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "prepare": "husky install",
-    "build": "tsc ; npm run db-init-all",
-    "start": "node ./build/index.js",
+    "build": "npm run clean && tsc && npm run copy-files",
+    "copy-files": "cp -r ./src/public ./build/",
+    "clean": "rm -rf ./build",
+    "start": "node build/index.js",
     "format": "prettier --write src/. --ignore-path .gitignore",
     "lint": "eslint src/. --ignore-path .gitignore",
     "fix-style": "npm run format && npm run lint -- --fix",
@@ -19,6 +21,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "copyfiles": "^2.4.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
