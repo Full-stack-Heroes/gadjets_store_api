@@ -8,6 +8,9 @@ Api url from host: https://gadjets-store-apu.onrender.com/
 
 please set in .env file next variables:
 
+For migration to your local database run **once**
+
+
 ```
 PORT=3000 // port
 CLIENT_URL='http://localhost:3001' // your frontend url
