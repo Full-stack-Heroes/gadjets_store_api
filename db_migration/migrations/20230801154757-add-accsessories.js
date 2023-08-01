@@ -1,9 +1,11 @@
 'use strict';
 
+const TABLE_NAME = 'Accessories';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('productsInfo', {
+    await queryInterface.createTable(TABLE_NAME, {
       id: {
         type: Sequelize.STRING,
         primaryKey: true,
@@ -65,14 +67,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      camera: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      zoom: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
       cell: {
         type: Sequelize.ARRAY(Sequelize.STRING),
         allowNull: false,
@@ -81,6 +75,6 @@ module.exports = {
   },
 
   async down (queryInterface) {
-    await queryInterface.dropTable('productsInfo');
+    await queryInterface.dropTable(TABLE_NAME);
   }
 };

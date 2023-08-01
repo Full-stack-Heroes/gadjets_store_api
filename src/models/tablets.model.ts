@@ -2,11 +2,11 @@ import { Model, Column, Table } from 'sequelize-typescript';
 import { DataTypes } from 'sequelize';
 
 @Table({
-  tableName: 'Phones',
+  tableName: 'Tablets',
   createdAt: false,
   updatedAt: false,
 })
-export class Phones extends Model {
+export class Tablets extends Model {
   @Column({
     type: DataTypes.STRING,
     primaryKey: true,

@@ -2,11 +2,11 @@ import { Model, Column, Table } from 'sequelize-typescript';
 import { DataTypes } from 'sequelize';
 
 @Table({
-  tableName: 'Phones',
+  tableName: 'Accessories',
   createdAt: false,
   updatedAt: false,
 })
-export class Phones extends Model {
+export class Accessories extends Model {
   @Column({
     type: DataTypes.STRING,
     primaryKey: true,
@@ -99,18 +99,6 @@ export class Phones extends Model {
     allowNull: false,
   })
     ram: string;
-
-  @Column({
-    type: DataTypes.STRING,
-    allowNull: false,
-  })
-    camera: string;
-
-  @Column({
-    type: DataTypes.STRING,
-    allowNull: false,
-  })
-    zoom: string;
 
   @Column({
     type: DataTypes.ARRAY(DataTypes.STRING),

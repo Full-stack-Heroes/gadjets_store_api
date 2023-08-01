@@ -1,4 +1,6 @@
 import { Product } from './product.model';
-import { ProductsInfo } from './phones.model';
+import { Phones } from './phones.model';
+import { Tablets } from './tablets.model';
+import { Accessories } from './accessories.model';
 
-export const models = [Product, ProductsInfo];
+export const models = [Product, Phones, Tablets, Accessories];
