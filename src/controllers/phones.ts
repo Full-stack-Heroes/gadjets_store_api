@@ -3,14 +3,12 @@ import { Phones } from '../models/phones.model';
 import { Product } from '../models/product.model';
 
 const getAll = async (req: Request, res: Response) => {
-
   try {
     const accessories = await Product.findAll({
       where: {
-        category: 'phones'
-      }
+        category: 'phones',
+      },
     });
-
 
     res.send(accessories);
   } catch (error) {
@@ -30,7 +28,6 @@ const getById = async (req: Request, res: Response) => {
 
       return;
     }
-
 
     res.send(phones);
   } catch (error) {

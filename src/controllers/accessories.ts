@@ -3,14 +3,12 @@ import { Accessories } from '../models/accessories.model';
 import { Product } from '../models/product.model';
 
 const getAll = async (req: Request, res: Response) => {
-
   try {
     const accessories = await Product.findAll({
       where: {
-        category: 'accessories'
-      }
+        category: 'accessories',
+      },
     });
-
 
     res.send(accessories);
   } catch (error) {
@@ -30,7 +28,6 @@ const getById = async (req: Request, res: Response) => {
 
       return;
     }
-
 
     res.send(accessories);
   } catch (error) {
