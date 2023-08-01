@@ -14,6 +14,9 @@ const credentials = {
 
 const development = {
   ...credentials,
+  dialectOptions: {
+    ssl: true,
+  }
 };
 
 const production = {

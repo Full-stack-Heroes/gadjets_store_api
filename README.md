@@ -6,17 +6,22 @@
 
 Api url from host: https://gadjets-store-apu.onrender.com/
 
-please set in .env file next variables:
+For migrating data to your local DB use **npm run db-init-all**
 
-For migration to your local database run **once**
+Example of .env in .env.sample file.
 
+Enpoints:
+```
+/products - returns all products
+
+/phones - returns list of phone cards
+/phones/id - detail info about phone
+
+/tablets - returns list of tablets cards
+/tablets/id - detail info about tablets
+
+/accessories - returns list of tablets cards
+/accessories/id - detail info about tablets
 
 ```
-PORT=3000 // port
-CLIENT_URL='http://localhost:3001' // your frontend url
-SERVER_HOST='http://localhost' // default is localhost
 
-DB_URI= // link for your local db
-```
-
-todo: Create environment variables for development and production
