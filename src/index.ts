@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import { getProducts } from './controllers/products';
 import dotenv from 'dotenv';
 import { dbInit } from './db/dbInit';
+import { productsController } from './controllers/products';
 
 dotenv.config();
 const app = express();
@@ -19,8 +19,8 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(express.static(__dirname + '/public'));
 
-app.get('/products', getProducts);
-app.get('/products/test', );
+app.get('/products', productsController.getProducts);
+app.get('/products/:id', productsController.getProductData);
 
 app.listen(3000, () => {
   console.log(`Server works on ${process.env.SERVER_HOST}:${process.env.PORT}`);
