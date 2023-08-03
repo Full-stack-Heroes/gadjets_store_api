@@ -15,6 +15,18 @@ async function getProducts(req: Request, res: Response) {
   }
 }
 
+const getDiscount = async (req: Request, res: Response) => {
+  try {
+    const discountedProducts = await productService.getByDiscount(100);
+
+    res.send(discountedProducts);
+  } catch (error) {
+    console.error('Error fetching discounted products:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
 export const productsController = {
   getProducts,
+  getDiscount,
 };

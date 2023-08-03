@@ -33,9 +33,17 @@ const getByYear = (category: string, year: number) => {
   });
 };
 
+const getByDiscount = (discount: number) => {
+  return Product.findAll({
+    where: 
+        Sequelize.literal(`CAST("fullPrice" AS numeric) - CAST("price" AS numeric) > ${discount}`),
+  });
+};
+
 export const productService = {
   getAll,
   getAllByCategory,
   getRecomended,
   getByYear,
+  getByDiscount,
 };
