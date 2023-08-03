@@ -28,12 +28,13 @@ const getRecomended = (id: string, category: string, limit: number) => {
   });
 };
 
-const getByYear = (category: string, year: number) => {
+const getNew = (category: string, limit: number) => {
   return Product.findAll({
     where: {
-      year: year.toString(),
       category: category,
     },
+    order:[['year', 'DESC']],
+    limit
   });
 };
 
@@ -49,7 +50,7 @@ export const productService = {
   getAll,
   getAllByCategory,
   getRecomended,
-  getByYear,
+  getNew,
   getByDiscount,
   getAllByOptionsCount,
 };
