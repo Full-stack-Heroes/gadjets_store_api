@@ -26,12 +26,15 @@ app.get('/products', productsController.getProducts);
 
 app.get('/phones', phonesController.getAll);
 app.get('/phones/:id', phonesController.getById);
+app.get('/phones/:id/recommended', phonesController.getRecommended);
 
 app.get('/tablets', tabletsController.getAll);
 app.get('/tablets/:id', tabletsController.getById);
+app.get('/tablets/:id/recommended', tabletsController.getRecommended);
 
 app.get('/accessories', accessoriesController.getAll);
 app.get('/accessories/:id', accessoriesController.getById);
+app.get('/accessories/:id/recommended', accessoriesController.getRecommended);
 
 app.listen(3000, () => {
   console.log(`Server works on ${process.env.SERVER_HOST}:${process.env.PORT}`);
