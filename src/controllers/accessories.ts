@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { Accessories } from '../models/accessories.model';
 import { Product } from '../models/product.model';
+import { Sequelize } from 'sequelize-typescript';
+import { Op } from 'sequelize';
 
 const getAll = async (req: Request, res: Response) => {
   try {
@@ -36,7 +38,34 @@ const getById = async (req: Request, res: Response) => {
   }
 };
 
+const getRecommended = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const accessory = await Accessories.findByPk(id);
+
+    if (!accessory) {
+      res.status(404).send({ message: 'Cannot find Accessory with this ID' });
+      return;
+    }
+
+    const recommendedAccessories = await Accessories.findAll({
+      where: {
+        id: { [Op.not]: accessory.id },
+      },
+      order: [Sequelize.fn('RANDOM')],
+      limit: 5,
+    });
+
+    res.send(recommendedAccessories);
+  } catch (error) {
+    console.error('Error fetching recommended accessories:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
 export const accessoriesController = {
   getAll,
   getById,
+  getRecommended,
 };
