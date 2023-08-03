@@ -1,18 +1,14 @@
 import { Request, Response } from 'express';
 import { Tablets } from '../models/tablets.model';
-import { Product } from '../models/product.model';
-import { Sequelize } from 'sequelize-typescript';
-import { Op } from 'sequelize';
+import { productService } from '../services/product.service';
+
+const CATEGORY_NAME = 'tablets';
 
 const getAll = async (req: Request, res: Response) => {
   try {
-    const accessories = await Product.findAll({
-      where: {
-        category: 'tablets',
-      },
-    });
+    const tablets = await productService.getAllByCategory(CATEGORY_NAME);
 
-    res.send(accessories);
+    res.send(tablets);
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).send('Internal Server Error');
@@ -40,6 +36,7 @@ const getById = async (req: Request, res: Response) => {
 
 const getRecommended = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const LIMIT = 5;
 
   try {
     const tablet = await Tablets.findByPk(id);
@@ -49,14 +46,11 @@ const getRecommended = async (req: Request, res: Response) => {
       return;
     }
 
-    const recommendedTablets = await Product.findAll({
-      where: {
-        itemId: { [Op.not]: tablet.id },
-        category: 'tablets',
-      },
-      order: [Sequelize.fn('RANDOM')],
-      limit: 5,
-    });
+    const recommendedTablets = await productService.getRecomended(
+      tablet.id,
+      CATEGORY_NAME,
+      LIMIT
+    );
 
     res.send(recommendedTablets);
   } catch (error) {
@@ -67,12 +61,7 @@ const getRecommended = async (req: Request, res: Response) => {
 
 const getNew = async (req: Request, res: Response) => {
   try {
-    const newTablets = await Product.findAll({
-      where: {
-        year: '2021',
-        category: 'tablets',
-      },
-    });
+    const newTablets = await productService.getByYear(CATEGORY_NAME, 2021);
 
     res.send(newTablets);
   } catch (error) {

@@ -1,18 +1,14 @@
 import { Request, Response } from 'express';
 import { Phones } from '../models/phones.model';
-import { Product } from '../models/product.model';
-import { Sequelize } from 'sequelize-typescript';
-import { Op } from 'sequelize';
+import { productService } from '../services/product.service';
+
+const CATEGORY_NAME = 'phones';
 
 const getAll = async (req: Request, res: Response) => {
   try {
-    const accessories = await Product.findAll({
-      where: {
-        category: 'phones',
-      },
-    });
+    const phones = await productService.getAllByCategory(CATEGORY_NAME);
 
-    res.send(accessories);
+    res.send(phones);
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).send('Internal Server Error');
@@ -23,15 +19,14 @@ const getById = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
-    const phones = await Phones.findByPk(id);
+    const phoneInfo = await Phones.findByPk(id);
 
-    if (!phones) {
+    if (!phoneInfo) {
       res.status(404).send({ message: 'Cannot find Phone with this ID' });
-
       return;
     }
 
-    res.send(phones);
+    res.send(phoneInfo);
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).send('Internal Server Error');
@@ -40,6 +35,7 @@ const getById = async (req: Request, res: Response) => {
 
 const getRecommended = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const LIMIT = 8;
 
   try {
     const phone = await Phones.findByPk(id);
@@ -49,14 +45,11 @@ const getRecommended = async (req: Request, res: Response) => {
       return;
     }
 
-    const recommendedPhones = await Product.findAll({
-      where: {
-        itemId: { [Op.not]: phone.id },
-        category: 'phones',
-      },
-      order: [Sequelize.fn('RANDOM')],
-      limit: 8,
-    });
+    const recommendedPhones = await productService.getRecomended(
+      phone.id,
+      CATEGORY_NAME,
+      LIMIT
+    );
 
     res.send(recommendedPhones);
   } catch (error) {
@@ -67,12 +60,7 @@ const getRecommended = async (req: Request, res: Response) => {
 
 const getNew = async (req: Request, res: Response) => {
   try {
-    const newPhones = await Product.findAll({
-      where: {
-        year: '2022',
-        category: 'phones',
-      },
-    });
+    const newPhones = await productService.getByYear(CATEGORY_NAME, 2022);
 
     res.send(newPhones);
   } catch (error) {
