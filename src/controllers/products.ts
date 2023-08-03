@@ -1,12 +1,28 @@
 import { Request, Response } from 'express';
 import { productService } from '../services/product.service';
+import { FindOptions } from 'sequelize';
 
 async function getProducts(req: Request, res: Response) {
-  // const pageNumber: number = parseInt(req.query.page as string) || 1;
-  // const pageSize: number = parseInt(req.query.size as string) || 10;
-
   try {
-    const productsOnPage = await productService.getAll();
+    const { productType, page, limit } = req.query;
+    
+    const findOptions: FindOptions = {};
+
+    if (productType) {
+      findOptions.where = { category: productType };
+    }
+
+    if (page) {
+      const defaultAmmount = 12;
+      const itemsByPage = Number(limit) || defaultAmmount;
+      const offset = (Number(page) - 1) * itemsByPage;
+      findOptions.offset = offset;
+      findOptions.limit = itemsByPage;
+    }
+
+
+    const productsOnPage = await productService
+      .getAllByOptionsCount(findOptions);
 
     res.send(productsOnPage);
   } catch (error) {

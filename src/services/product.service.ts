@@ -1,8 +1,12 @@
-import { Op, Sequelize } from 'sequelize';
+import { FindOptions, Op, Sequelize } from 'sequelize';
 import { Product } from '../models/product.model';
 
 const getAll = () => {
   return Product.findAll();
+};
+
+const getAllByOptionsCount = (options: FindOptions) => {
+  return Product.findAndCountAll(options);
 };
 
 const getAllByCategory = (category: string) => {
@@ -46,4 +50,5 @@ export const productService = {
   getRecomended,
   getByYear,
   getByDiscount,
+  getAllByOptionsCount
 };
