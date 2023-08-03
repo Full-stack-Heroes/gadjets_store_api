@@ -33,16 +33,17 @@ const getNew = (category: string, limit: number) => {
     where: {
       category: category,
     },
-    order:[['year', 'DESC']],
-    limit
+    order: [['year', 'DESC']],
+    limit,
   });
 };
 
-const getByDiscount = (discount: number) => {
+const getWithMaxDiscount = (limit: number) => {
   return Product.findAll({
-    where: Sequelize.literal(
-      `CAST("fullPrice" AS numeric) - CAST("price" AS numeric) > ${discount}`
-    ),
+    order: [
+      [ Sequelize.literal('CAST("fullPrice" AS numeric) - CAST("price" AS numeric)'), 'DESC']
+    ],
+    limit
   });
 };
 
@@ -51,6 +52,6 @@ export const productService = {
   getAllByCategory,
   getRecomended,
   getNew,
-  getByDiscount,
+  getWithMaxDiscount,
   getAllByOptionsCount,
 };

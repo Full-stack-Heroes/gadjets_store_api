@@ -38,9 +38,11 @@ async function getProducts(req: Request, res: Response) {
   }
 }
 
-const getDiscount = async (req: Request, res: Response) => {
+const getWithDiscount = async (req: Request, res: Response) => {
+  const LIMIT = 24;
+  
   try {
-    const discountedProducts = await productService.getByDiscount(100);
+    const discountedProducts = await productService.getWithMaxDiscount(LIMIT);
 
     res.send(discountedProducts);
   } catch (error) {
@@ -51,5 +53,5 @@ const getDiscount = async (req: Request, res: Response) => {
 
 export const productsController = {
   getProducts,
-  getDiscount,
+  getWithDiscount,
 };

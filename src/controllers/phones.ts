@@ -60,7 +60,7 @@ const getRecommended = async (req: Request, res: Response) => {
 
 const getNew = async (req: Request, res: Response) => {
   const limit = 10;
-  
+
   try {
     const newPhones = await productService.getNew(CATEGORY_NAME, limit);
 
