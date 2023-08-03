@@ -49,9 +49,10 @@ const getRecommended = async (req: Request, res: Response) => {
       return;
     }
 
-    const recommendedTablets = await Tablets.findAll({
+    const recommendedTablets = await Product.findAll({
       where: {
-        id: { [Op.not]: tablet.id },
+        itemId: { [Op.not]: tablet.id },
+        category: 'tablets',
       },
       order: [Sequelize.fn('RANDOM')],
       limit: 5,
@@ -64,8 +65,25 @@ const getRecommended = async (req: Request, res: Response) => {
   }
 };
 
+const getNew = async (req: Request, res: Response) => {
+  try {
+    const newTablets = await Product.findAll({
+      where: {
+        year: '2021',
+        category: 'tablets',
+      },
+    });
+
+    res.send(newTablets);
+  } catch (error) {
+    console.error('Error fetching new tablets:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
 export const tabletsController = {
   getAll,
   getById,
-  getRecommended
+  getRecommended,
+  getNew,
 };
