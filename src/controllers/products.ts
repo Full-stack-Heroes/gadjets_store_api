@@ -5,11 +5,18 @@ import { FindOptions } from 'sequelize';
 async function getProducts(req: Request, res: Response) {
   try {
     const { productType, page, limit } = req.query;
-    
+    const isDefaultRoot = req.path === '/products';
+
     const findOptions: FindOptions = {};
 
-    if (productType) {
+    if (isDefaultRoot && productType) {
       findOptions.where = { category: productType };
+    }
+
+    if (!isDefaultRoot) {
+      const categoryFromPath = req.path.slice(1);
+      console.log(categoryFromPath);
+      findOptions.where = { category: categoryFromPath };
     }
 
     if (page) {
@@ -20,9 +27,9 @@ async function getProducts(req: Request, res: Response) {
       findOptions.limit = itemsByPage;
     }
 
-
-    const productsOnPage = await productService
-      .getAllByOptionsCount(findOptions);
+    const productsOnPage = await productService.getAllByOptionsCount(
+      findOptions
+    );
 
     res.send(productsOnPage);
   } catch (error) {
