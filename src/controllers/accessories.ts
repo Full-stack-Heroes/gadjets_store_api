@@ -1,16 +1,12 @@
 import { Request, Response } from 'express';
 import { Accessories } from '../models/accessories.model';
-import { Product } from '../models/product.model';
-import { Sequelize } from 'sequelize-typescript';
-import { Op } from 'sequelize';
+import { productService } from '../services/product.service';
+
+const CATEGORY_NAME = 'accessories';
 
 const getAll = async (req: Request, res: Response) => {
   try {
-    const accessories = await Product.findAll({
-      where: {
-        category: 'accessories',
-      },
-    });
+    const accessories = await productService.getAllByCategory(CATEGORY_NAME);
 
     res.send(accessories);
   } catch (error) {
@@ -23,15 +19,15 @@ const getById = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
-    const accessories = await Accessories.findByPk(id);
+    const accessoriesInfo = await Accessories.findByPk(id);
 
-    if (!accessories) {
+    if (!accessoriesInfo) {
       res.status(404).send({ message: 'Cannot find Accessory with this ID' });
 
       return;
     }
 
-    res.send(accessories);
+    res.send(accessoriesInfo);
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).send('Internal Server Error');
@@ -40,6 +36,7 @@ const getById = async (req: Request, res: Response) => {
 
 const getRecommended = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const LIMIT = 5;
 
   try {
     const accessory = await Accessories.findByPk(id);
@@ -49,14 +46,8 @@ const getRecommended = async (req: Request, res: Response) => {
       return;
     }
 
-    const recommendedAccessories = await Product.findAll({
-      where: {
-        itemId: { [Op.not]: accessory.id },
-        category: 'accessories'
-      },
-      order: [Sequelize.fn('RANDOM')],
-      limit: 5,
-    });
+    const recommendedAccessories = await productService
+      .getRecomended(accessory.id, CATEGORY_NAME, LIMIT);
 
     res.send(recommendedAccessories);
   } catch (error) {
@@ -67,12 +58,7 @@ const getRecommended = async (req: Request, res: Response) => {
 
 const getNew = async (req: Request, res: Response) => {
   try {
-    const newAccessories = await Product.findAll({
-      where: {
-        year: '2020',
-        category: 'accessories',
-      },
-    });
+    const newAccessories = await productService.getByYear(CATEGORY_NAME, 2020);
 
     res.send(newAccessories);
   } catch (error) {
