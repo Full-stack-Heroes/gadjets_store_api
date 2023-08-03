@@ -46,8 +46,11 @@ const getRecommended = async (req: Request, res: Response) => {
       return;
     }
 
-    const recommendedTablets = await productService
-      .getRecomended(tablet.id, CATEGORY_NAME, LIMIT);
+    const recommendedTablets = await productService.getRecomended(
+      tablet.id,
+      CATEGORY_NAME,
+      LIMIT
+    );
 
     res.send(recommendedTablets);
   } catch (error) {

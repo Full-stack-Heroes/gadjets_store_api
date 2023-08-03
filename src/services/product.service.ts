@@ -9,7 +9,7 @@ const getAllByCategory = (category: string) => {
   return Product.findAll({
     where: {
       category,
-    }
+    },
   });
 };
 
@@ -39,4 +39,3 @@ export const productService = {
   getRecomended,
   getByYear,
 };
-

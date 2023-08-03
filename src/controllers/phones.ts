@@ -45,8 +45,11 @@ const getRecommended = async (req: Request, res: Response) => {
       return;
     }
 
-    const recommendedPhones = await productService
-      .getRecomended(phone.id, CATEGORY_NAME, LIMIT);
+    const recommendedPhones = await productService.getRecomended(
+      phone.id,
+      CATEGORY_NAME,
+      LIMIT
+    );
 
     res.send(recommendedPhones);
   } catch (error) {
