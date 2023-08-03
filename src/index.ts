@@ -23,6 +23,7 @@ app.use(express.static('public'));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/products', productsController.getProducts);
+app.get('/products/discount', productsController.getDiscount);
 
 app.get('/phones', phonesController.getAll);
 app.get('/phones/new', phonesController.getNew);
