@@ -41,9 +41,14 @@ const getNew = (category: string, limit: number) => {
 const getWithMaxDiscount = (limit: number) => {
   return Product.findAll({
     order: [
-      [ Sequelize.literal('CAST("fullPrice" AS numeric) - CAST("price" AS numeric)'), 'DESC']
+      [
+        Sequelize.literal(
+          'CAST("fullPrice" AS numeric) - CAST("price" AS numeric)'
+        ),
+        'DESC',
+      ],
     ],
-    limit
+    limit,
   });
 };
 

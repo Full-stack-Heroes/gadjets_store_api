@@ -40,7 +40,7 @@ async function getProducts(req: Request, res: Response) {
 
 const getWithDiscount = async (req: Request, res: Response) => {
   const LIMIT = 24;
-  
+
   try {
     const discountedProducts = await productService.getWithMaxDiscount(LIMIT);
 
