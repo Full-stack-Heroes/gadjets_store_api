@@ -49,9 +49,10 @@ const getRecommended = async (req: Request, res: Response) => {
       return;
     }
 
-    const recommendedAccessories = await Accessories.findAll({
+    const recommendedAccessories = await Product.findAll({
       where: {
-        id: { [Op.not]: accessory.id },
+        itemId: { [Op.not]: accessory.id },
+        category: 'accessories'
       },
       order: [Sequelize.fn('RANDOM')],
       limit: 5,
@@ -64,8 +65,25 @@ const getRecommended = async (req: Request, res: Response) => {
   }
 };
 
+const getNew = async (req: Request, res: Response) => {
+  try {
+    const newAccessories = await Product.findAll({
+      where: {
+        year: '2020',
+        category: 'accessories',
+      },
+    });
+
+    res.send(newAccessories);
+  } catch (error) {
+    console.error('Error fetching new accessories:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
 export const accessoriesController = {
   getAll,
   getById,
   getRecommended,
+  getNew,
 };
