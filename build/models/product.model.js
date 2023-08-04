@@ -27,13 +27,6 @@ __decorate([
         type: sequelize_1.DataTypes.STRING,
     }),
     __metadata("design:type", String)
-], Product.prototype, "phoneId", void 0);
-__decorate([
-    (0, sequelize_typescript_1.AllowNull)(false),
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_1.DataTypes.STRING,
-    }),
-    __metadata("design:type", String)
 ], Product.prototype, "itemId", void 0);
 __decorate([
     (0, sequelize_typescript_1.AllowNull)(false),
