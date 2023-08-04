@@ -59,22 +59,8 @@ const getRecommended = async (req: Request, res: Response) => {
   }
 };
 
-const getNew = async (req: Request, res: Response) => {
-  const limit = 10;
-
-  try {
-    const newTablets = await productService.getNew(CATEGORY_NAME, limit);
-
-    res.send(newTablets);
-  } catch (error) {
-    console.error('Error fetching new tablets:', error);
-    res.status(500).send('Internal Server Error');
-  }
-};
-
 export const tabletsController = {
   getAll,
   getById,
   getRecommended,
-  getNew,
 };

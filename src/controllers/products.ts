@@ -51,6 +51,19 @@ async function getProducts(req: Request, res: Response) {
   }
 }
 
+const getNew = async (req: Request, res: Response) => {
+  const limit = 20;
+
+  try {
+    const newProducts = await productService.getNew(limit);
+
+    res.send(newProducts);
+  } catch (error) {
+    console.error('Error fetching new phones:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
 const getWithDiscount = async (req: Request, res: Response) => {
   const LIMIT = 24;
 
@@ -67,4 +80,5 @@ const getWithDiscount = async (req: Request, res: Response) => {
 export const productsController = {
   getProducts,
   getWithDiscount,
+  getNew,
 };

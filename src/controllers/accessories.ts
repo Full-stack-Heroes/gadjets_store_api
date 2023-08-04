@@ -59,22 +59,8 @@ const getRecommended = async (req: Request, res: Response) => {
   }
 };
 
-const getNew = async (req: Request, res: Response) => {
-  const limit = 10;
-
-  try {
-    const newAccessories = await productService.getNew(CATEGORY_NAME, limit);
-
-    res.send(newAccessories);
-  } catch (error) {
-    console.error('Error fetching new accessories:', error);
-    res.status(500).send('Internal Server Error');
-  }
-};
-
 export const accessoriesController = {
   getAll,
   getById,
   getRecommended,
-  getNew,
 };
