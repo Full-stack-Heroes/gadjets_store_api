@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Tablets } from '../models/tablets.model';
 import { productService } from '../services/product.service';
+import { Product } from '../models/product.model';
 
 const CATEGORY_NAME = 'tablets';
 
@@ -19,7 +20,12 @@ const getById = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
-    const tablets = await Tablets.findByPk(id);
+    const tablets = await Tablets.findByPk(id, {
+      include: {
+        model: Product,
+        as: 'productItemInfo'
+      }
+    });
 
     if (!tablets) {
       res.status(404).send({ message: 'Cannot find Tablet with this ID' });

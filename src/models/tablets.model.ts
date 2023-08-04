@@ -1,5 +1,6 @@
 import { Model, Column, Table } from 'sequelize-typescript';
 import { DataTypes } from 'sequelize';
+import { Product } from './product.model';
 
 @Table({
   tableName: 'Tablets',

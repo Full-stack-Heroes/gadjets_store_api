@@ -6,10 +6,21 @@ import { productsController } from './controllers/products';
 import { phonesController } from './controllers/phones';
 import { tabletsController } from './controllers/tablets';
 import { accessoriesController } from './controllers/accessories';
+import { Accessories } from './models/accessories.model';
+import { Phones } from './models/phones.model';
+import { Product } from './models/product.model';
+import { Tablets } from './models/tablets.model';
+
+dbInit();
+
+Phones.belongsTo(Product, {foreignKey: 'id', targetKey: 'itemId', as: 'productItemInfo'});
+
+Tablets.belongsTo(Product, {foreignKey: 'id',targetKey: 'itemId', as: 'productItemInfo'});
+
+Accessories.belongsTo(Product, {foreignKey: 'id',targetKey: 'itemId', as: 'productItemInfo'});
 
 dotenv.config();
 const app = express();
-dbInit();
 
 app.use(
   cors({

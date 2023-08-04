@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Accessories } from '../models/accessories.model';
 import { productService } from '../services/product.service';
+import { Product } from '../models/product.model';
 
 const CATEGORY_NAME = 'accessories';
 
@@ -19,7 +20,12 @@ const getById = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
-    const accessoriesInfo = await Accessories.findByPk(id);
+    const accessoriesInfo = await Accessories.findByPk(id, {
+      include: {
+        model: Product,
+        as: 'productItemInfo'
+      }
+    });
 
     if (!accessoriesInfo) {
       res.status(404).send({ message: 'Cannot find Accessory with this ID' });
