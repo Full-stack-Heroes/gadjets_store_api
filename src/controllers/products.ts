@@ -6,7 +6,7 @@ async function getProducts(req: Request, res: Response) {
   try {
     const { productType, page, limit, sortBy, asc } = req.query;
     const isDefaultRoot = req.path === '/products';
-    const defaultSortBy:Order = [['year', 'DESC']];
+    const defaultSortBy: Order = [['year', 'DESC']];
 
     const findOptions: FindOptions = {};
 
@@ -34,7 +34,7 @@ async function getProducts(req: Request, res: Response) {
       const orderByVariations = ['price', 'screen', 'capacity', 'ram', 'year'];
       const isString = typeof sortBy === 'string';
       const isReverse = asc;
-      
+
       if (isString && orderByVariations.includes(sortBy)) {
         findOptions.order = [[sortBy, isReverse ? 'ASC' : 'DESC']];
       }
