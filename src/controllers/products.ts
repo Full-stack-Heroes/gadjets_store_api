@@ -1,13 +1,16 @@
 import { Request, Response } from 'express';
 import { productService } from '../services/product.service';
-import { FindOptions } from 'sequelize';
+import { FindOptions, Order } from 'sequelize';
 
 async function getProducts(req: Request, res: Response) {
   try {
-    const { productType, page, limit } = req.query;
+    const { productType, page, limit, sortBy, asc } = req.query;
     const isDefaultRoot = req.path === '/products';
+    const defaultSortBy:Order = [['year', 'DESC']];
 
     const findOptions: FindOptions = {};
+
+    findOptions.order = defaultSortBy;
 
     if (isDefaultRoot && productType) {
       findOptions.where = { category: productType };
@@ -25,6 +28,16 @@ async function getProducts(req: Request, res: Response) {
       const offset = (Number(page) - 1) * itemsByPage;
       findOptions.offset = offset;
       findOptions.limit = itemsByPage;
+    }
+
+    if (sortBy) {
+      const orderByVariations = ['price', 'screen', 'capacity', 'ram', 'year'];
+      const isString = typeof sortBy === 'string';
+      const isReverse = asc;
+      
+      if (isString && orderByVariations.includes(sortBy)) {
+        findOptions.order = [[sortBy, isReverse ? 'ASC' : 'DESC']];
+      }
     }
 
     const productsOnPage = await productService.getAllByOptionsCount(

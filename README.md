@@ -16,6 +16,7 @@ Enpoints:
 /products?productType= - return all products by category
 /products?page= - return list of products by page (default ammount is 12)
 /products?limit= - set limit to ammount of products on a page
+/products?sortBy=price, screen, capacity, ram, year
 
 /phones - returns list of phone cards
 /phones/id - detail info about phone
