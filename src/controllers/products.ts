@@ -1,12 +1,48 @@
 import { Request, Response } from 'express';
 import { productService } from '../services/product.service';
+import { FindOptions, Order } from 'sequelize';
 
 async function getProducts(req: Request, res: Response) {
-  // const pageNumber: number = parseInt(req.query.page as string) || 1;
-  // const pageSize: number = parseInt(req.query.size as string) || 10;
-
   try {
-    const productsOnPage = await productService.getAll();
+    const { productType, page, limit, sortBy, asc } = req.query;
+    const isDefaultRoot = req.path === '/products';
+    const defaultSortBy: Order = [['year', 'DESC']];
+
+    const findOptions: FindOptions = {};
+
+    findOptions.order = defaultSortBy;
+
+    if (isDefaultRoot && productType) {
+      findOptions.where = { category: productType };
+    }
+
+    if (!isDefaultRoot) {
+      const categoryFromPath = req.path.slice(1);
+      console.log(categoryFromPath);
+      findOptions.where = { category: categoryFromPath };
+    }
+
+    if (page) {
+      const defaultAmmount = 12;
+      const itemsByPage = Number(limit) || defaultAmmount;
+      const offset = (Number(page) - 1) * itemsByPage;
+      findOptions.offset = offset;
+      findOptions.limit = itemsByPage;
+    }
+
+    if (sortBy) {
+      const orderByVariations = ['price', 'screen', 'capacity', 'ram', 'year'];
+      const isString = typeof sortBy === 'string';
+      const isReverse = asc;
+
+      if (isString && orderByVariations.includes(sortBy)) {
+        findOptions.order = [[sortBy, isReverse ? 'ASC' : 'DESC']];
+      }
+    }
+
+    const productsOnPage = await productService.getAllByOptionsCount(
+      findOptions
+    );
 
     res.send(productsOnPage);
   } catch (error) {
@@ -15,9 +51,11 @@ async function getProducts(req: Request, res: Response) {
   }
 }
 
-const getDiscount = async (req: Request, res: Response) => {
+const getWithDiscount = async (req: Request, res: Response) => {
+  const LIMIT = 24;
+
   try {
-    const discountedProducts = await productService.getByDiscount(100);
+    const discountedProducts = await productService.getWithMaxDiscount(LIMIT);
 
     res.send(discountedProducts);
   } catch (error) {
@@ -28,5 +66,5 @@ const getDiscount = async (req: Request, res: Response) => {
 
 export const productsController = {
   getProducts,
-  getDiscount,
+  getWithDiscount,
 };

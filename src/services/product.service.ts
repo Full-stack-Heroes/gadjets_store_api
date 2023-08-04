@@ -1,8 +1,12 @@
-import { Op, Sequelize } from 'sequelize';
+import { FindOptions, Op, Sequelize } from 'sequelize';
 import { Product } from '../models/product.model';
 
 const getAll = () => {
   return Product.findAll();
+};
+
+const getAllByOptionsCount = (options: FindOptions) => {
+  return Product.findAndCountAll(options);
 };
 
 const getAllByCategory = (category: string) => {
@@ -24,19 +28,27 @@ const getRecomended = (id: string, category: string, limit: number) => {
   });
 };
 
-const getByYear = (category: string, year: number) => {
+const getNew = (category: string, limit: number) => {
   return Product.findAll({
     where: {
-      year: year.toString(),
       category: category,
     },
+    order: [['year', 'DESC']],
+    limit,
   });
 };
 
-const getByDiscount = (discount: number) => {
+const getWithMaxDiscount = (limit: number) => {
   return Product.findAll({
-    where: 
-        Sequelize.literal(`CAST("fullPrice" AS numeric) - CAST("price" AS numeric) > ${discount}`),
+    order: [
+      [
+        Sequelize.literal(
+          'CAST("fullPrice" AS numeric) - CAST("price" AS numeric)'
+        ),
+        'DESC',
+      ],
+    ],
+    limit,
   });
 };
 
@@ -44,6 +56,7 @@ export const productService = {
   getAll,
   getAllByCategory,
   getRecomended,
-  getByYear,
-  getByDiscount,
+  getNew,
+  getWithMaxDiscount,
+  getAllByOptionsCount,
 };

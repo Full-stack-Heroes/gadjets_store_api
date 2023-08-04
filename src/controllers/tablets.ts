@@ -60,8 +60,10 @@ const getRecommended = async (req: Request, res: Response) => {
 };
 
 const getNew = async (req: Request, res: Response) => {
+  const limit = 10;
+
   try {
-    const newTablets = await productService.getByYear(CATEGORY_NAME, 2021);
+    const newTablets = await productService.getNew(CATEGORY_NAME, limit);
 
     res.send(newTablets);
   } catch (error) {
