@@ -58,22 +58,8 @@ const getRecommended = async (req: Request, res: Response) => {
   }
 };
 
-const getNew = async (req: Request, res: Response) => {
-  const limit = 10;
-
-  try {
-    const newPhones = await productService.getNew(CATEGORY_NAME, limit);
-
-    res.send(newPhones);
-  } catch (error) {
-    console.error('Error fetching new phones:', error);
-    res.status(500).send('Internal Server Error');
-  }
-};
-
 export const phonesController = {
   getAll,
   getById,
   getRecommended,
-  getNew,
 };

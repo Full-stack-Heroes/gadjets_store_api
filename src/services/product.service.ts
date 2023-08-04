@@ -28,11 +28,8 @@ const getRecomended = (id: string, category: string, limit: number) => {
   });
 };
 
-const getNew = (category: string, limit: number) => {
+const getNew = (limit: number) => {
   return Product.findAll({
-    where: {
-      category: category,
-    },
     order: [['year', 'DESC']],
     limit,
   });
