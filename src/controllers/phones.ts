@@ -23,8 +23,8 @@ const getById = async (req: Request, res: Response) => {
     const phoneInfo = await Phones.findByPk(id, {
       include: {
         model: Product,
-        as: 'productItemInfo'
-      }
+        as: 'productItemInfo',
+      },
     });
 
     if (!phoneInfo) {
