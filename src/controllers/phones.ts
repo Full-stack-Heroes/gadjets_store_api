@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Phones } from '../models/phones.model';
 import { productService } from '../services/product.service';
+import { Product } from '../models/product.model';
 
 const CATEGORY_NAME = 'phones';
 
@@ -19,7 +20,12 @@ const getById = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
-    const phoneInfo = await Phones.findByPk(id);
+    const phoneInfo = await Phones.findByPk(id, {
+      include: {
+        model: Product,
+        as: 'productItemInfo',
+      },
+    });
 
     if (!phoneInfo) {
       res.status(404).send({ message: 'Cannot find Phone with this ID' });

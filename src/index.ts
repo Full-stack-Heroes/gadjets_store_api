@@ -6,10 +6,13 @@ import { productsController } from './controllers/products';
 import { phonesController } from './controllers/phones';
 import { tabletsController } from './controllers/tablets';
 import { accessoriesController } from './controllers/accessories';
+import { initRelations } from './db/initRelations';
+
+dbInit();
+initRelations();
 
 dotenv.config();
 const app = express();
-dbInit();
 
 app.use(
   cors({
