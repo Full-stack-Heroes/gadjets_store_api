@@ -7,6 +7,8 @@ import { phonesController } from './controllers/phones';
 import { tabletsController } from './controllers/tablets';
 import { accessoriesController } from './controllers/accessories';
 import { initRelations } from './db/initRelations';
+import { router as userRouter } from './routes/user';
+
 
 dbInit();
 initRelations();
@@ -21,6 +23,8 @@ app.use(
   })
 );
 app.use(express.json());
+// Routing
+app.use('/user', userRouter);
 
 app.use(express.static('public'));
 app.use(express.static(__dirname + '/public'));
