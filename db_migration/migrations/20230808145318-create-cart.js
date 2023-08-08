@@ -1,6 +1,6 @@
 'use strict';
 
-const TABLE_NAME = 'Users';
+const TABLE_NAME = 'Cart';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -12,32 +12,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-
-      firstName: {
-        allowNull:false,
-        type: Sequelize.STRING,
-      },
-
-      lastName: {
-        allowNull:false,
-        type: Sequelize.STRING,
-      },
-
-      email: {
-        allowNull:false,
-        type: Sequelize.STRING,
-        unique: true
-      },
-
-      password: {
+      
+      quantity: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        defaultValue: 1,
       },
 
-      role: {
-        defaultValue: 'User',
+      itemId: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+      },
+
+      userId: {
+        allowNull: false, 
+        type: Sequelize.INTEGER,
       }
     });
   },

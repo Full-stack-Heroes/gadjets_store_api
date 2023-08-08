@@ -1,4 +1,4 @@
-import { Model, Column, Table } from 'sequelize-typescript';
+import { Model, Column, Table, AllowNull } from 'sequelize-typescript';
 import { DataTypes } from 'sequelize';
 
 @Table({
@@ -7,11 +7,31 @@ import { DataTypes } from 'sequelize';
   updatedAt: false,
 })
 export class User extends Model {
+  @AllowNull(false)
+  @Column({
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  })
+    id: number;
+  
   @Column({
     type: DataTypes.STRING,
     allowNull: false,
   })
-    username: string;
+    email: string;
+
+  @Column({
+    type: DataTypes.STRING,
+    allowNull: false,
+  })
+    firstName: string;
+
+  @Column({
+    type: DataTypes.STRING,
+    allowNull: false,
+  })
+    lastName: string;
 
   @Column({
     type: DataTypes.STRING,

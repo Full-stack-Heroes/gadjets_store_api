@@ -1,21 +1,20 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import bcryptjs from 'bcryptjs';
 import { User } from '../models/user.model';
 import { signJWT } from '../functions/signJWT';
+import { userService } from '../services/user.service';
 
-const validateToken = (req: Request, res: Response, rext: NextFunction) => {
+const validateToken = (req: Request, res: Response) => {
   console.log('User', 'Token validated');
 
   res.status(200).send({
     message: 'User Authorized',
-    username: res.locals.jwt.username,
+    id: res.locals.jwt.userId,
   });
 };
 
-const register = (req: Request, res: Response, rext: NextFunction) => {
-  const { username, password } = req.body;
-
-  console.log('registering', username, password);
+const register = (req: Request, res: Response) => {
+  const { email, firstName, lastName, password, role } = req.body;
 
   bcryptjs.hash(password, 7, async (hashError, hash) => {
     if (hashError) {
@@ -26,15 +25,18 @@ const register = (req: Request, res: Response, rext: NextFunction) => {
     }
 
     try {
-      const isUserExists = await User.findOne({ where: { username } });
+      const isUserExists = await userService.findByEmail(email);
 
       if (isUserExists) {
         return res.status(404).send({ message: 'User already Exists' });
       }
 
       await User.create({
-        username,
+        email,
+        firstName,
+        lastName,
         password: hash,
+        role,
       });
 
       return res.send({ message: 'User created' });
@@ -44,11 +46,11 @@ const register = (req: Request, res: Response, rext: NextFunction) => {
   });
 };
 
-const login = async (req: Request, res: Response, rext: NextFunction) => {
-  const { username, password } = req.body;
+const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
 
   try {
-    const currentUser = await User.findOne({ where: { username } });
+    const currentUser = await userService.findByEmail(email);
 
     if (!currentUser) {
       return res.status(401).send({
@@ -91,23 +93,30 @@ const login = async (req: Request, res: Response, rext: NextFunction) => {
   }
 };
 
-const getAllUsers = async (req: Request, res: Response, rext: NextFunction) => {
-  try {
-    const allUsers = await User.findAndCountAll({
-      attributes: ['username'],
-    });
+// const getAllUsers = async (req: Request, res: Response) => {
+//   const reqEmail = res.locals.jwt.email;
+  
+//   try {
+//     const requestUser = await userService.findByEmail(reqEmail);
 
-    return res.send(allUsers);
-  } catch (error) {
-    console.log(error);
+//     if (requestUser && requestUser.role === 'Admin') {
+//       const allUsers = await User.findAndCountAll({
+//         attributes: ['username'],
+//       });
+  
+//       return res.send(allUsers);
+//     } else {
+//       return res.status(403).send({ message: 'You dont have premission' });
+//     }
+//   } catch (error) {
+//     console.log(error);
 
-    res.status(500).send({ message: 'Internal server error' });
-  }
-};
+//     res.status(500).send({ message: 'Internal server error' });
+//   }
+// };
 
 export const userController = {
   validateToken,
   register,
   login,
-  getAllUsers,
 };

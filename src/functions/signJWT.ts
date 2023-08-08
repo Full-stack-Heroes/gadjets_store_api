@@ -8,12 +8,11 @@ export const signJWT = (
   user: User,
   callback: (error: Error | null, token: string | null) => void
 ): void => {
-  console.log('Auth', `Apptempt to sign token for ${user.username}`);
 
   try {
     jwt.sign(
       {
-        username: user.username,
+        userId: user.id,
       },
       secret,
       {

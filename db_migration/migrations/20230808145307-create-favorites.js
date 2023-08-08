@@ -1,6 +1,6 @@
 'use strict';
 
-const TABLE_NAME = 'Users';
+const TABLE_NAME = 'FavoriteItems';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -13,31 +13,14 @@ module.exports = {
         type: Sequelize.INTEGER
       },
 
-      firstName: {
-        allowNull:false,
-        type: Sequelize.STRING,
-      },
-
-      lastName: {
-        allowNull:false,
-        type: Sequelize.STRING,
-      },
-
-      email: {
-        allowNull:false,
-        type: Sequelize.STRING,
-        unique: true
-      },
-
-      password: {
+      itemId: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
 
-      role: {
-        defaultValue: 'User',
-        allowNull: false,
-        type: Sequelize.STRING
+      userId: {
+        allowNull: false, 
+        type: Sequelize.INTEGER,
       }
     });
   },

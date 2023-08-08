@@ -9,6 +9,14 @@ import { DataTypes } from 'sequelize';
 export class Product extends Model {
   @AllowNull(false)
   @Column({
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  })
+    id: number;
+  
+  @AllowNull(false)
+  @Column({
     type: DataTypes.STRING,
   })
     category: string;
