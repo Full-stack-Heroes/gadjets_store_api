@@ -6,9 +6,10 @@ import { signJWT } from '../functions/signJWT';
 const validateToken = (req: Request, res: Response, rext: NextFunction) => {
   console.log('User', 'Token validated');
 
-  res.status(200).send({ 
+  res.status(200).send({
     message: 'User Authorized',
-    username: res.locals.jwt.username});
+    username: res.locals.jwt.username,
+  });
 };
 
 const register = (req: Request, res: Response, rext: NextFunction) => {
@@ -37,7 +38,6 @@ const register = (req: Request, res: Response, rext: NextFunction) => {
       });
 
       return res.send({ message: 'User created' });
-
     } catch (error) {
       return res.status(500).send({ message: error });
     }
@@ -52,23 +52,22 @@ const login = async (req: Request, res: Response, rext: NextFunction) => {
 
     if (!currentUser) {
       return res.status(401).send({
-        message: 'User with this username isn\'t registered' 
+        message: 'User with this username isn\'t registered',
       });
     }
 
     bcryptjs.compare(password, currentUser.password, (err, success) => {
-      if (err) { 
+      if (err) {
         console.log(err);
 
         return res.status(500).send({ message: 'Internal Server Error' });
-      
       }
 
       if (success) {
         signJWT(currentUser, (_error, token) => {
           if (_error) {
-            console.log('Unable to sign token',_error);
-            
+            console.log('Unable to sign token', _error);
+
             return res.status(401).send({ message: 'Unauthorized' });
           } else if (token) {
             return res.status(200).send({
@@ -95,7 +94,7 @@ const login = async (req: Request, res: Response, rext: NextFunction) => {
 const getAllUsers = async (req: Request, res: Response, rext: NextFunction) => {
   try {
     const allUsers = await User.findAndCountAll({
-      attributes: ['username']
+      attributes: ['username'],
     });
 
     return res.send(allUsers);
@@ -103,9 +102,12 @@ const getAllUsers = async (req: Request, res: Response, rext: NextFunction) => {
     console.log(error);
 
     res.status(500).send({ message: 'Internal server error' });
-  };
+  }
 };
 
 export const userController = {
-  validateToken, register, login, getAllUsers
+  validateToken,
+  register,
+  login,
+  getAllUsers,
 };

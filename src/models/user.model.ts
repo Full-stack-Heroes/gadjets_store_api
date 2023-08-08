@@ -18,4 +18,11 @@ export class User extends Model {
     allowNull: false,
   })
     password: string;
+
+  @Column({
+    type: DataTypes.STRING,
+    defaultValue: 'User',
+    allowNull: false,
+  })
+    role: 'User' | 'Admin';
 }

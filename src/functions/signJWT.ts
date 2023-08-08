@@ -6,25 +6,29 @@ const secret = process.env.SERVER_TOKEN_SECRET || 'secretsecret';
 
 export const signJWT = (
   user: User,
-  callback: (error: Error | null, token: string | null) => void,
+  callback: (error: Error | null, token: string | null) => void
 ): void => {
   console.log('Auth', `Apptempt to sign token for ${user.username}`);
 
   try {
-    jwt.sign({
-      username: user.username,
-    }, secret, {
-      algorithm: 'HS256',
-      expiresIn: '1h',
-    }, (error, encoded) => {
-      if (error) {
-        callback(error, null);
-      } else if (encoded) {
-        callback(null, encoded);
+    jwt.sign(
+      {
+        username: user.username,
+      },
+      secret,
+      {
+        algorithm: 'HS256',
+        expiresIn: '1h',
+      },
+      (error, encoded) => {
+        if (error) {
+          callback(error, null);
+        } else if (encoded) {
+          callback(null, encoded);
+        }
       }
-    });
-  } catch(error) {
+    );
+  } catch (error) {
     console.log('Auth', error);
   }
 };
-

@@ -9,7 +9,6 @@ import { accessoriesController } from './controllers/accessories';
 import { initRelations } from './db/initRelations';
 import { router as userRouter } from './routes/user';
 
-
 dbInit();
 initRelations();
 
