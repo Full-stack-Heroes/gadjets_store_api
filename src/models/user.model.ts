@@ -9,12 +9,6 @@ import { DataTypes } from 'sequelize';
 export class User extends Model {
   @Column({
     type: DataTypes.STRING,
-    primaryKey: true,
-  })
-    id: string;
-
-  @Column({
-    type: DataTypes.STRING,
     allowNull: false,
   })
     username: string;
