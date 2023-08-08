@@ -6,7 +6,9 @@ import { signJWT } from '../functions/signJWT';
 const validateToken = (req: Request, res: Response, rext: NextFunction) => {
   console.log('User', 'Token validated');
 
-  res.status(200).send({ message: 'User Authorized' });
+  res.status(200).send({ 
+    message: 'User Authorized',
+    username: res.locals.jwt.username});
 };
 
 const register = (req: Request, res: Response, rext: NextFunction) => {
@@ -16,7 +18,7 @@ const register = (req: Request, res: Response, rext: NextFunction) => {
 
   bcryptjs.hash(password, 7, async (hashError, hash) => {
     if (hashError) {
-      res.status(500).send({
+      return res.status(500).send({
         message: hashError.message,
         error: hashError,
       });
@@ -49,16 +51,20 @@ const login = async (req: Request, res: Response, rext: NextFunction) => {
     const currentUser = await User.findOne({ where: { username } });
 
     if (!currentUser) {
-      return res.status(401).send({ message: 'Unauthorized' });
+      return res.status(401).send({
+        message: 'User with this username isn\'t registered' 
+      });
     }
 
-    bcryptjs.compare(password, currentUser.password, (error, result) => {
-      if (error) { 
-        console.log(error);
+    bcryptjs.compare(password, currentUser.password, (err, success) => {
+      if (err) { 
+        console.log(err);
 
-        return res.status(401).send({ message: 'invalid password' });
+        return res.status(500).send({ message: 'Internal Server Error' });
       
-      } else if (result) {
+      }
+
+      if (success) {
         signJWT(currentUser, (_error, token) => {
           if (_error) {
             console.log('Unable to sign token',_error);
@@ -73,6 +79,12 @@ const login = async (req: Request, res: Response, rext: NextFunction) => {
           }
         });
       }
+
+      if (!success) {
+        return res.status(403).send({
+          message: 'Passwords isn\'t mach',
+        });
+      }
     });
   } catch (error) {
     console.log(error);
@@ -80,8 +92,18 @@ const login = async (req: Request, res: Response, rext: NextFunction) => {
   }
 };
 
-const getAllUsers = (req: Request, res: Response, rext: NextFunction) => {
+const getAllUsers = async (req: Request, res: Response, rext: NextFunction) => {
+  try {
+    const allUsers = await User.findAndCountAll({
+      attributes: ['username']
+    });
 
+    return res.send(allUsers);
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).send({ message: 'Internal server error' });
+  };
 };
 
 export const userController = {

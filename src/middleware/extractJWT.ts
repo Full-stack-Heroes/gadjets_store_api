@@ -4,11 +4,13 @@ import jwt from 'jsonwebtoken';
 
 const secret = process.env.SERVER_TOKEN_SECRET || 'secretsecret';
 
+console.log(secret);
+
 export const extractJWT = (req: Request, res: Response, next: NextFunction) => {
   console.log('Auth', 'Validating token');
 
   const token = req.headers.authorization?.split(' ')[1];
-  
+
   if (token) {
     jwt.verify(
       token,
@@ -25,6 +27,6 @@ export const extractJWT = (req: Request, res: Response, next: NextFunction) => {
         }
       });
   } else {
-    return res.status(401).send({message: 'Unauthorized'});
+    return res.status(401).send({ message: 'Unauthorized'});
   }
 };
