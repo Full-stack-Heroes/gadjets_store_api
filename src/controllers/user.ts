@@ -76,7 +76,9 @@ const login = async (req: Request, res: Response) => {
           } else if (token) {
             const { id } = currentUser;
             const cartData = await cartService.getAllUserCart(id);
-            const favoritesData = await favoritesService.getAllUserFavorites(id);
+            const favoritesData = await favoritesService.getAllUserFavorites(
+              id
+            );
 
             return res.status(200).send({
               message: 'Auth Successful',
