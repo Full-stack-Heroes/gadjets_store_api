@@ -77,8 +77,26 @@ const getWithDiscount = async (req: Request, res: Response) => {
   }
 };
 
+const getSearch = async (req: Request, res: Response) => {
+  const { searchQuery } = req.query;
+  if (!searchQuery || typeof searchQuery !== 'string') {
+    return;
+  }
+
+  try {
+    const searchProducts = await productService.getSearch(searchQuery);
+    console.log(searchProducts);
+
+    res.send(searchProducts);
+  } catch (error) {
+    console.error('Error fetching phones:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
 export const productsController = {
   getProducts,
   getWithDiscount,
   getNew,
+  getSearch,
 };

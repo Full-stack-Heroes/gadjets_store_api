@@ -49,6 +49,16 @@ const getWithMaxDiscount = (limit: number) => {
   });
 };
 
+const getSearch = (searchQuery: string) => {
+  return Product.findAll({
+    order: [['capacity', 'ASC']],
+    where: {
+      name: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('name')), 'LIKE', '%' + searchQuery.toLowerCase() + '%')
+    },
+    limit: 5
+  });
+};
+
 export const productService = {
   getAll,
   getAllByCategory,
@@ -56,4 +66,5 @@ export const productService = {
   getNew,
   getWithMaxDiscount,
   getAllByOptionsCount,
+  getSearch,
 };

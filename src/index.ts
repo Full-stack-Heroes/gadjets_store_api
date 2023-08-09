@@ -28,6 +28,7 @@ app.use(express.static(__dirname + '/public'));
 app.get('/products', productsController.getProducts);
 app.get('/products/discount', productsController.getWithDiscount);
 app.get('/products/new', productsController.getNew);
+app.get('/products/search', productsController.getSearch);
 
 app.get('/phones', productsController.getProducts);
 app.get('/phones/:id', phonesController.getById);
