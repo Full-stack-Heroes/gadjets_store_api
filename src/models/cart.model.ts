@@ -33,4 +33,5 @@ export class Cart extends Model {
     allowNull: false,
   })
     userId: number;
+  Product: any;
 }

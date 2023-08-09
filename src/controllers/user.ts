@@ -3,6 +3,8 @@ import bcryptjs from 'bcryptjs';
 import { User } from '../models/user.model';
 import { signJWT } from '../functions/signJWT';
 import { userService } from '../services/user.service';
+import { cartService } from '../services/cart.service';
+import { favoritesService } from '../services/favorites.service';
 
 const validateToken = (req: Request, res: Response) => {
   console.log('User', 'Token validated');
@@ -66,16 +68,22 @@ const login = async (req: Request, res: Response) => {
       }
 
       if (success) {
-        signJWT(currentUser, (_error, token) => {
+        signJWT(currentUser, async (_error, token) => {
           if (_error) {
             console.log('Unable to sign token', _error);
 
             return res.status(401).send({ message: 'Unauthorized' });
           } else if (token) {
+            const { id } = currentUser;
+            const cartData = await cartService.getAllUserCart(id);
+            const favoritesData = await favoritesService.getAllUserFavorites(id);
+
             return res.status(200).send({
               message: 'Auth Successful',
               token,
-              user: currentUser,
+              userId: id,
+              cartData,
+              favoritesData,
             });
           }
         });
@@ -92,28 +100,6 @@ const login = async (req: Request, res: Response) => {
     res.status(500).send({ message: 'Internal server error' });
   }
 };
-
-// const getAllUsers = async (req: Request, res: Response) => {
-//   const reqEmail = res.locals.jwt.email;
-
-//   try {
-//     const requestUser = await userService.findByEmail(reqEmail);
-
-//     if (requestUser && requestUser.role === 'Admin') {
-//       const allUsers = await User.findAndCountAll({
-//         attributes: ['username'],
-//       });
-
-//       return res.send(allUsers);
-//     } else {
-//       return res.status(403).send({ message: 'You dont have premission' });
-//     }
-//   } catch (error) {
-//     console.log(error);
-
-//     res.status(500).send({ message: 'Internal server error' });
-//   }
-// };
 
 export const userController = {
   validateToken,

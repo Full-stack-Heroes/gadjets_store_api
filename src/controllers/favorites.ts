@@ -14,7 +14,7 @@ const getAllFavorites = async (req: Request, res: Response) => {
   }
 };
 
-const addFavorites = async (req: Request, res: Response) => {
+const addFavorite = async (req: Request, res: Response) => {
   const { userId } = res.locals.jwt;
   const { itemId } = req.body;
 
@@ -66,6 +66,6 @@ const deleteFavorite = async (req: Request, res: Response) => {
 
 export const userFavoritesController = {
   getAllFavorites,
-  addFavorites,
+  addFavorite,
   deleteFavorite,
 };
