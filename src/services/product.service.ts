@@ -49,11 +49,21 @@ const getWithMaxDiscount = (limit: number) => {
   });
 };
 
-const getSearch = (searchQuery: string) => {
-  return Product.findAll({
-    order: [['capacity', 'ASC']],
+const getSearch = async (searchQuery: string) => {
+  return await Product.findAll({
+    order: [ [Sequelize.literal(`
+    CASE
+      WHEN "capacity" ~ '\\d+ TB' THEN CAST(SUBSTRING("capacity" FROM '\\d+') AS INTEGER) * 1024 * 1024 * 1024 * 1024
+      WHEN "capacity" ~ '\\d+ GB' THEN CAST(SUBSTRING("capacity" FROM '\\d+') AS INTEGER) * 1024 * 1024 * 1024
+      WHEN "capacity" ~ '\\d+ MB' THEN CAST(SUBSTRING("capacity" FROM '\\d+') AS INTEGER) * 1024 * 1024
+      ELSE 0
+    END
+  `), 'DESC']],
     where: {
-      name: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('name')), 'LIKE', '%' + searchQuery.toLowerCase() + '%')
+      name: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('name')), 'LIKE', '%' + searchQuery.toLowerCase() + '%'),
+      category: {
+        [Op.not]: 'accessories'
+      }
     },
     limit: 5
   });
