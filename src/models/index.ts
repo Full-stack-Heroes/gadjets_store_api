@@ -13,5 +13,5 @@ export const models = [
   Accessories,
   User,
   Cart,
-  Favorites
+  Favorites,
 ];

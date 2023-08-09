@@ -6,7 +6,7 @@ const getAllUserFavorites = async (userId: number) => {
     where: { userId },
     include: Product,
   });
-  const products = favorites.map(favorite => favorite.Product);
+  const products = favorites.map((favorite) => favorite.Product);
 
   return products;
 };
@@ -16,7 +16,7 @@ const getOneFavorite = (itemId: string, userId: string) => {
     where: {
       itemId,
       userId,
-    }
+    },
   });
 };
 
@@ -32,7 +32,7 @@ const removeFromFavorites = (userId: number, itemId: number) => {
     where: {
       userId,
       itemId,
-    }
+    },
   });
 };
 

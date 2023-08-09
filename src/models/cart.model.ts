@@ -14,7 +14,7 @@ export class Cart extends Model {
     autoIncrement: true,
   })
     id: number;
-  
+
   @Column({
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -27,7 +27,7 @@ export class Cart extends Model {
     defaultValue: 1,
   })
     quantity: number;
-  
+
   @Column({
     type: DataTypes.INTEGER,
     allowNull: false,

@@ -8,7 +8,6 @@ export const signJWT = (
   user: User,
   callback: (error: Error | null, token: string | null) => void
 ): void => {
-
   try {
     jwt.sign(
       {

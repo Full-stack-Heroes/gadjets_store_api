@@ -25,10 +25,10 @@ export const initRelations = () => {
   });
 
   Cart.belongsTo(Product, {
-    foreignKey: 'itemId'
+    foreignKey: 'itemId',
   });
 
   Favorites.belongsTo(Product, {
-    foreignKey: 'itemId'
+    foreignKey: 'itemId',
   });
 };

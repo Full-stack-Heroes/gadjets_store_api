@@ -14,7 +14,7 @@ export class User extends Model {
     autoIncrement: true,
   })
     id: number;
-  
+
   @Column({
     type: DataTypes.STRING,
     allowNull: false,

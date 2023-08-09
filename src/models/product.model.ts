@@ -14,7 +14,7 @@ export class Product extends Model {
     autoIncrement: true,
   })
     id: number;
-  
+
   @AllowNull(false)
   @Column({
     type: DataTypes.STRING,

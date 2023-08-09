@@ -27,5 +27,4 @@ export class Favorites extends Model {
   })
     userId: number;
   Product: any;
-
 }

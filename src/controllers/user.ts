@@ -95,7 +95,7 @@ const login = async (req: Request, res: Response) => {
 
 // const getAllUsers = async (req: Request, res: Response) => {
 //   const reqEmail = res.locals.jwt.email;
-  
+
 //   try {
 //     const requestUser = await userService.findByEmail(reqEmail);
 
@@ -103,7 +103,7 @@ const login = async (req: Request, res: Response) => {
 //       const allUsers = await User.findAndCountAll({
 //         attributes: ['username'],
 //       });
-  
+
 //       return res.send(allUsers);
 //     } else {
 //       return res.status(403).send({ message: 'You dont have premission' });

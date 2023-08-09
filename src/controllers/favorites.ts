@@ -46,12 +46,13 @@ const deleteFavorite = async (req: Request, res: Response) => {
     return res.status(400).send({ message: 'Field itemId required' });
   }
 
-
   try {
     const isFavExists = await favoritesService.getOneFavorite(itemId, userId);
 
     if (!isFavExists) {
-      return res.status(400).send({ message: 'Cannot find favorite with this id for this user' });
+      return res
+        .status(400)
+        .send({ message: 'Cannot find favorite with this id for this user' });
     }
 
     await favoritesService.removeFromFavorites(userId, itemId);
@@ -66,5 +67,5 @@ const deleteFavorite = async (req: Request, res: Response) => {
 export const userFavoritesController = {
   getAllFavorites,
   addFavorites,
-  deleteFavorite
+  deleteFavorite,
 };
