@@ -39,7 +39,34 @@ const addToCart = async (req: Request, res: Response) => {
   }
 };
 
+const remove = async (req: Request, res: Response) => {
+  const { userId } = res.locals.jwt;
+  const { itemId } = req.body;
+
+  if (!itemId) {
+    return res.status(400).send({ message: 'Field itemId required' });
+  }
+
+  try {
+    const isCartItemExists = await cartService.getOneItem(itemId, userId);
+
+    if (!isCartItemExists) {
+      return res
+        .status(400)
+        .send({ message: 'Cannot find cart item with this id for this user' });
+    }
+
+    await cartService.removeItem(userId, itemId);
+
+    return res.sendStatus(204);
+  } catch (error) {
+    console.log(error);
+    return res.status(500);
+  }
+};
+
 export const cartController = {
   getAll,
   addToCart,
+  remove,
 };

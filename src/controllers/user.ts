@@ -30,7 +30,7 @@ const register = (req: Request, res: Response) => {
       const isUserExists = await userService.findByEmail(email);
 
       if (isUserExists) {
-        return res.status(404).send({ message: 'User already Exists' });
+        return res.status(400).send({ message: 'User already Exists' });
       }
 
       await User.create({
@@ -41,7 +41,7 @@ const register = (req: Request, res: Response) => {
         role,
       });
 
-      return res.send({ message: 'User created' });
+      return res.status(201).send({ message: 'User created' });
     } catch (error) {
       return res.status(500).send({ message: error });
     }
@@ -91,7 +91,7 @@ const login = async (req: Request, res: Response) => {
 
       if (!success) {
         return res.status(403).send({
-          message: 'Passwords isn\'t mach',
+          message: 'Wrong password',
         });
       }
     });

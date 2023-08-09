@@ -16,4 +16,5 @@ router.delete('/favorites', extractJWT, userFavoritesController.deleteFavorite);
 
 router.get('/cart', extractJWT, cartController.getAll);
 router.post('/cart', extractJWT, cartController.addToCart);
+router.delete('/cart', extractJWT, cartController.remove);
 // router.delete('/cart', extractJWT, userFavoritesController.deleteFavorite);
