@@ -4,7 +4,7 @@ import { FindOptions, Order } from 'sequelize';
 
 async function getProducts(req: Request, res: Response) {
   try {
-    const { productType, page, limit, sortBy, asc } = req.query;
+    const { productType, page, limit, sortBy, order } = req.query;
     const isDefaultRoot = req.path === '/products';
     const defaultSortBy: Order = [['year', 'DESC']];
 
@@ -33,7 +33,7 @@ async function getProducts(req: Request, res: Response) {
     if (sortBy) {
       const orderByVariations = ['price', 'screen', 'capacity', 'ram', 'year'];
       const isString = typeof sortBy === 'string';
-      const isReverse = asc;
+      const isReverse = order;
 
       if (isString && orderByVariations.includes(sortBy)) {
         findOptions.order = [[sortBy, isReverse ? 'ASC' : 'DESC']];
@@ -85,7 +85,6 @@ const getSearch = async (req: Request, res: Response) => {
 
   try {
     const searchProducts = await productService.getSearch(searchQuery);
-    console.log(searchProducts);
 
     res.send(searchProducts);
   } catch (error) {
