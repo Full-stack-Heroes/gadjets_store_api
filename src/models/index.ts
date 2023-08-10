@@ -5,6 +5,7 @@ import { Accessories } from './accessories.model';
 import { User } from './user.model';
 import { Cart } from './cart.model';
 import { Favorites } from './favorites.model';
+import { Order } from './orders.model';
 
 export const models = [
   Product,
@@ -14,4 +15,5 @@ export const models = [
   User,
   Cart,
   Favorites,
+  Order,
 ];

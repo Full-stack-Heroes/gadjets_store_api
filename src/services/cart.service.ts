@@ -2,13 +2,13 @@ import { Cart } from '../models/cart.model';
 import { Product } from '../models/product.model';
 
 const getAllUserCart = async (userId: number) => {
-  const favorites = await Cart.findAll({
+  const cart = await Cart.findAll({
     where: { userId },
     include: Product,
   });
-  const products = favorites.map((favorite) => ({
-    ...favorite.Product.dataValues,
-    quantity: favorite.quantity,
+  const products = cart.map((cart) => ({
+    ...cart.Product.dataValues,
+    quantity: cart.quantity,
   }));
 
   return products;
@@ -35,7 +35,7 @@ const updateCart = (cartItem: Cart, quantity?: number) => {
   return cartItem.update({ quantity });
 };
 
-const removeItem = (userId: number, itemId: number) => {
+const removeItem = (userId: number, itemId: number | number[]) => {
   return Cart.destroy({
     where: {
       itemId,
