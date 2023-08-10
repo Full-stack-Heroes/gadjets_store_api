@@ -33,7 +33,7 @@ async function getProducts(req: Request, res: Response) {
     if (sortBy) {
       const orderByVariations = ['price', 'screen', 'capacity', 'ram', 'year'];
       const isString = typeof sortBy === 'string';
-      const isReverse = order;
+      const isReverse = Boolean(order);
 
       if (isString && orderByVariations.includes(sortBy)) {
         findOptions.order = [[sortBy, isReverse ? 'ASC' : 'DESC']];
