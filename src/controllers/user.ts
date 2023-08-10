@@ -16,7 +16,7 @@ const validateToken = (req: Request, res: Response) => {
 };
 
 const register = (req: Request, res: Response) => {
-  const { email, firstName, lastName, password, role } = req.body;
+  const { email, username, password, role } = req.body;
 
   bcryptjs.hash(password, 7, async (hashError, hash) => {
     if (hashError) {
@@ -35,8 +35,7 @@ const register = (req: Request, res: Response) => {
 
       await User.create({
         email,
-        firstName,
-        lastName,
+        username,
         password: hash,
         role,
       });
