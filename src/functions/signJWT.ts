@@ -16,7 +16,7 @@ export const signJWT = (
       secret,
       {
         algorithm: 'HS256',
-        expiresIn: '1h',
+        expiresIn: '12h',
       },
       (error, encoded) => {
         if (error) {

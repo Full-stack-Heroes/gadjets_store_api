@@ -16,7 +16,6 @@ export const extractJWT = (req: Request, res: Response, next: NextFunction) => {
       if (error) {
         return res.status(404).send({
           message: error.message,
-          error,
         });
       } else {
         res.locals.jwt = decoded;
