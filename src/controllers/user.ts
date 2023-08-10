@@ -50,8 +50,6 @@ const register = (req: Request, res: Response) => {
 const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  console.log(email, password);
-
   if (!email.length || !password.length) {
     return res.status(400).send({
       message: 'Fields can`t be empty. Please enter the data!',
