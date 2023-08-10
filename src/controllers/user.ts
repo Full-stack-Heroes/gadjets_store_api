@@ -50,7 +50,7 @@ const register = (req: Request, res: Response) => {
 
 const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  
+
   console.log(email, password);
 
   if (!email.length || !password.length) {
@@ -58,7 +58,6 @@ const login = async (req: Request, res: Response) => {
       message: 'Fields can`t be empty. Please enter the data!',
     });
   }
-
 
   try {
     const currentUser = await userService.findByEmail(email);
@@ -85,7 +84,9 @@ const login = async (req: Request, res: Response) => {
           } else if (token) {
             const { id } = currentUser;
             const cartData = await cartService.getAllUserCart(id);
-            const favoritesData = await favoritesService.getAllUserFavorites(id);
+            const favoritesData = await favoritesService.getAllUserFavorites(
+              id
+            );
 
             return res.status(200).send({
               message: 'Auth Successful',

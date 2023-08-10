@@ -6,9 +6,9 @@ const getAllUserCart = async (userId: number) => {
     where: { userId },
     include: Product,
   });
-  const products = favorites.map(favorite => ({
+  const products = favorites.map((favorite) => ({
     ...favorite.Product.dataValues,
-    quantity: favorite.quantity
+    quantity: favorite.quantity,
   }));
 
   return products;
