@@ -32,7 +32,7 @@ const addToCart = async (req: Request, res: Response) => {
 
     await cartService.addToCart(userId, itemId, quantity);
 
-    return res.sendStatus(201);
+    return res.status(201).send({ message: 'Created' });
   } catch (error) {
     console.log(error);
     return res.status(500);

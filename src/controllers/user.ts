@@ -5,6 +5,7 @@ import { signJWT } from '../functions/signJWT';
 import { userService } from '../services/user.service';
 import { cartService } from '../services/cart.service';
 import { favoritesService } from '../services/favorites.service';
+import { orderService } from '../services/order.service';
 
 const validateToken = (req: Request, res: Response) => {
   console.log('User', 'Token validated');
@@ -84,6 +85,7 @@ const login = async (req: Request, res: Response) => {
             const favoritesData = await favoritesService.getAllUserFavorites(
               id
             );
+            const ordersData = await orderService.getAll(id);
 
             return res.status(200).send({
               message: 'Auth Successful',
@@ -91,6 +93,7 @@ const login = async (req: Request, res: Response) => {
               userId: id,
               cartData,
               favoritesData,
+              ordersData,
             });
           }
         });
