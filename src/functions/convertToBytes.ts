@@ -1,8 +1,8 @@
 export const convertToBytes = (capacity: string): number => {
   const unitMap: { [key: string]: number } = {
-    'TB': 1024 * 1024 * 1024 * 1024,
-    'GB': 1024 * 1024 * 1024,
-    'MB': 1024 * 1024,
+    TB: 1024 * 1024 * 1024 * 1024,
+    GB: 1024 * 1024 * 1024,
+    MB: 1024 * 1024,
     // Add more units if needed
   };
 
