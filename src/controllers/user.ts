@@ -62,7 +62,7 @@ const login = async (req: Request, res: Response) => {
 
     if (!currentUser) {
       return res.status(401).send({
-        message: 'User with this username isn\'t registered',
+        message: 'User with this email isn\'t registered',
       });
     }
 
