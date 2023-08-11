@@ -5,7 +5,8 @@ const getAll = async (userId: number | number[]) => {
   const orders = await Order.findAll({
     where: {
       userId,
-    }
+    },
+    order: [['createdAt', 'DESC']]
   });
 
   const preparedOrders = await Promise.all(orders.map(async ({id, createdAt, status, items}) => {
