@@ -7,6 +7,8 @@ import { orderController } from '../controllers/orders';
 
 export const router = express.Router();
 
+router.use(express.json());
+
 router.get('/validate', extractJWT, userController.validateToken);
 router.post('/register', userController.register);
 router.post('/login', userController.login);
