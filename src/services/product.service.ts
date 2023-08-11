@@ -70,9 +70,6 @@ const getSearch = async (searchQuery: string) => {
         'LIKE',
         '%' + searchQuery.toLowerCase() + '%'
       ),
-      category: {
-        [Op.not]: 'accessories',
-      },
     },
     limit: 5,
   });
