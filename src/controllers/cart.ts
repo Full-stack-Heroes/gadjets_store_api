@@ -27,7 +27,7 @@ const addToCart = async (req: Request, res: Response) => {
 
     if (isExistsCart) {
       await cartService.updateCart(isExistsCart, quantity);
-      return res.status(400).send({ message: 'Updated Cart' });
+      return res.status(204).send({ message: 'Updated Cart' });
     }
 
     await cartService.addToCart(userId, itemId, quantity);
