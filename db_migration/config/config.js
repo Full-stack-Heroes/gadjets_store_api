@@ -6,7 +6,7 @@ const credentials = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  host: process.env.DB_HOST,
+  host: 'postgres_db',
   port: 5432,
   dialect: 'postgres',
   seederStorage: 'sequelize',
@@ -15,14 +15,14 @@ const credentials = {
 const development = {
   ...credentials,
   dialectOptions: {
-    ssl: true,
+    // ssl: true,
   }
 };
 
 const production = {
   ...credentials,
   dialectOptions: {
-    ssl: true,
+    // ssl: true,
   }
 };
 
